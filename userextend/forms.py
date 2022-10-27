@@ -23,13 +23,13 @@ class AuthenticationNewForm(AuthenticationForm):
         super().__init__(*args, **kwargs)
         self.fields['username'].widget.attrs.update(
             {
-                'class': 'form-control',
+                'class': 'input_login_register',
                 'placeholder': 'Please enter your username'
             }
         )
         self.fields['password'].widget.attrs.update(
             {
-                'class': 'form-control',
+                'class': 'input_login_register',
                 'placeholder': 'Please enter your password'
             }
         )
