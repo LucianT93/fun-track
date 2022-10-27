@@ -8,11 +8,15 @@ class UserExtendCreationForm(UserCreationForm):
     class Meta:
         model = UserExtend
 
-        fields = []
-        widgets = {
+        fields = ['first_name', 'last_name', 'email', 'username']
 
-        }
+        # widgets = {
+        #
+        # }
 
+        # def __init__(self,*args, **kwargs):
+        #     super().__init__(*args,**kwargs)
+        #     self.fields['password'].widget.attrs.update({'class':'', 'placeholder':'Username'})
 
 class AuthenticationNewForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
