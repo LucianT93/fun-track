@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.models import User
+from django.forms import TextInput, EmailInput
 
 from userextend.models import UserExtend
 
@@ -8,28 +10,35 @@ class UserExtendCreationForm(UserCreationForm):
     class Meta:
         model = UserExtend
 
-        fields = ['first_name', 'last_name', 'email', 'username']
+        fields = ['username', 'email', 'password1', 'password2']
 
-        # widgets = {
-        #
-        # }
+        widgets = {
+            'first_name': TextInput(attrs={
+                'placeholder': 'Please enter your first name'
+            }),
+            'last_name': TextInput(attrs={
+                'placeholder': 'Please enter your last name'
+            }),
+            'email': EmailInput(attrs={
+                'placeholder': 'Please enter your email'
+            }),
+            'username': TextInput(attrs={
+                'placeholder': 'Please enter your username'
+            }),
+        }
 
-        # def __init__(self,*args, **kwargs):
-        #     super().__init__(*args,**kwargs)
-        #     self.fields['password'].widget.attrs.update({'class':'', 'placeholder':'Username'})
-
-class AuthenticationNewForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs.update(
+
+        self.fields['password1'].widget.attrs.update(
             {
-                'class': 'form-control',
-                'placeholder': 'Please enter your username'
+                'placeholder': 'Please enter your password',
+                'id': 'pass1_register'
             }
         )
-        self.fields['password'].widget.attrs.update(
+        self.fields['password2'].widget.attrs.update(
             {
-                'class': 'form-control',
-                'placeholder': 'Please enter your password'
+                'placeholder': 'Please enter your password again',
+                'id': 'pass2_register'
             }
         )

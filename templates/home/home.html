@@ -1,13 +1,80 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>FunTrack Homepage</title>
+
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
 </head>
 <body>
-<h1>Home</h1>
-{% if request.user.is_authenticated %}
-  <a href="{% url 'logout' %}">Logout</a>
-{% endif %}
+
+<section class="main-text">
+    <div class="homepage-text-container">
+    <div>
+        <p class="white">Mixing </p>
+        <p>
+            <span class="word one orange">Fun</span>
+            <span class="word one light-orange">Games</span>
+        </p>
+    </div>
+    <div>
+        <p class="white">with </p>
+        <p>
+            <span class="word two orange">Work</span>
+            <span class="word two light-orange">Task Tracking</span>
+        </p>
+    </div>
+    <div>
+        <p class="white">to create </p>
+        <p>
+            <span class="word three yellow">Fun Track</span>
+        </p>
+    </div>
+</div>
+</section>
+
+<section  class="what-do-we-do">
+
+</section>
+
+<section class="login-system">
+    <div style="position:sticky; right: 50px; bottom: 50px;">
+        {% if request.user.is_authenticated %}
+          <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+          <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+    </div>
+
+</section>
+
+
+<section class="main">
+
+  <div class="wrap wrap--1">
+    <div class="card-container card-container--1">
+      <p>01.Normal</p>
+    </div>
+  </div>
+
+  <div class="wrap wrap--2">
+    <div class="card-container card-container--2">
+      <p>02. Reverse</p>
+    </div>
+  </div>
+
+  <div class="wrap wrap--3">
+    <div class="card-container card-container--3">
+      <p>03. Normal</p>
+    </div>
+  </div>
+
+</section>
+
+<section>
+</section>
 </body>
+<script src="{% static 'script/javascript.js' %}"></script>
+
 </html>
