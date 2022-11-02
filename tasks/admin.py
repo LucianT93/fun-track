@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-admin.site.register('')
+from tasks.models import Tasks
+
+admin.site.register(Tasks)

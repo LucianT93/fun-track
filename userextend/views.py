@@ -5,22 +5,15 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.contrib import messages
 
-from userextend.forms import UserExtendCreationForm
+from tasks.models import Tasks
+from userextend.forms import UserExtendCreationForm, UserUpdateForm
 from userextend.models import UserExtend
-
-
-class EmployeeCreateView(CreateView):
-    template_name = 'registration/register.html'
-    model = UserExtend
-    form_class = UserExtendCreationForm
-    success_url = reverse_lazy('home')
 
 
 def user_login_registration(request):
     register_user_form = UserExtendCreationForm()
     if request.method == 'POST':
         if request.POST.get('flag') == 'login':
-            print(request.POST)
             username = request.POST['user-login']
             password = request.POST['password-login']
 
@@ -31,7 +24,6 @@ def user_login_registration(request):
             else:
                 messages.error(request, 'Username or password is incorrect')
         else:
-            print(request.POST)
             registered_user_form = UserExtendCreationForm(request.POST)
             if registered_user_form.is_valid():
                 registered_user_form.save()
@@ -43,3 +35,22 @@ def user_login_registration(request):
 def user_logout(request):
     logout(request)
     return redirect('home')
+
+
+def get_account(request):
+    account = UserExtend.objects.get(user_ptr_id=request.user.id)
+    tasks = Tasks.objects.filter(assigned_to=account.id)
+    return render(request, 'account/account.html', {'account': account, 'tasks': tasks})
+
+
+def update_account(request):
+    user_to_update = UserExtend.objects.get(user_ptr_id=request.user.id)
+    user_update_form = UserUpdateForm(instance=user_to_update)
+    if request.method == 'POST':
+        user_update_form = UserUpdateForm(request.POST, request.FILES, instance=user_to_update)
+        print(user_update_form.is_valid())
+        if user_update_form.is_valid():
+            user_update_form.save()
+            return redirect('account')
+
+    return render(request, 'account/update_account.html', {'form': user_update_form})
