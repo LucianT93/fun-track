@@ -6,7 +6,6 @@ from userextend.models import UserExtend
 class Tasks(models.Model):
     difficulties = (('easy', 'easy'), ('medium', 'medium'), ('hard', 'hard'))
 
-
     name = models.CharField(max_length=30)
     description = models.TextField(max_length=300)
     difficulty = models.CharField(choices=difficulties, max_length=10)
