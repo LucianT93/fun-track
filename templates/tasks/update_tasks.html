@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Task</title>
+</head>
+<body>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <label for="assign-to">Assign To: </label>
+    <select name="assign-to">
+        {% for user in users %}
+            <option value='{{ user.id }}'>{{ user.username }}</option>
+
+        {% endfor %}
+
+    </select>
+    <br>
+    <button type="submit">Update Task</button>
+</form>
+</body>
+</html>
