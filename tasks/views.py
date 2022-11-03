@@ -40,6 +40,8 @@ def create_task(request):
         task_create.save()
         return redirect('home')
 
+
+
     return render(request, 'tasks/create_task.html', {
         'form': task_create_form,
         'users': users

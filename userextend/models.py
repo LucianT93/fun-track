@@ -7,6 +7,7 @@ class UserExtend(User):
     is_employee = models.BooleanField(default=True)
     experience = models.IntegerField(default=0)
     gold = models.IntegerField(default=0)
+    image = models.ImageField(upload_to='profile/', blank=True, null=True, default='profile/user-default.png')
 
     active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
