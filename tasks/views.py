@@ -1,3 +1,6 @@
+import json
+
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView
@@ -5,6 +8,7 @@ from django.views.generic import UpdateView
 from tasks.forms import TaskCreationForm
 from tasks.models import Tasks
 from userextend.models import UserExtend
+from django.views.decorators.csrf import csrf_exempt
 
 
 def create_task(request):
@@ -39,8 +43,6 @@ def create_task(request):
         )
         task_create.save()
         return redirect('home')
-
-
 
     return render(request, 'tasks/create_task.html', {
         'form': task_create_form,
@@ -79,3 +81,33 @@ def update_task(request, pk):
         'form': task_update_form,
         'users': users,
     })
+
+
+def tasks(request):
+    tasks_list = Tasks.objects.all()
+    return render(request, 'tasks/tasks.html', {'tasks': tasks_list})
+
+
+def task_detail(request):
+    _tasks = Tasks.objects.all()
+    tasks_data = []
+    for task in _tasks:
+        data = {
+            'id': task.id,
+            'name': task.name,
+            'description': task.description,
+            'difficulty': task.difficulty,
+            'experience': task.experience,
+            'currency': task.currency,
+            'task_creator': task.task_creator.username,
+        }
+        tasks_data.append(data)
+    # print(tasks_data)
+    return HttpResponse(json.dumps(tasks_data), content_type='application/json')
+
+
+@csrf_exempt
+def task_detail_html(request):
+    queries = request.POST
+    print(queries)
+    return render(request, 'tasks/task_detail.html', {'queries': queries})

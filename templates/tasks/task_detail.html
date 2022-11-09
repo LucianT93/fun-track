@@ -1,0 +1,13 @@
+{% load static %}
+{% for query in queries %}
+<ul>
+  <li> {{ query.name }}</li>
+  <li> {{ query.description }}</li>
+  <li> {{ query.difficulty }}</li>
+  <li> {{ query.experience }}</li>
+  <li> {{ query.currency }}</li>
+  <li> {{ query.task_creator }}</li>
+</ul>
+{% endfor %}
+
+
