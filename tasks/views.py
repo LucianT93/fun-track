@@ -88,6 +88,7 @@ def tasks(request):
     return render(request, 'tasks/tasks.html', {'tasks': tasks_list})
 
 
+@csrf_exempt
 def task_detail(request, pk):
     task = Tasks.objects.get(id=pk)
     data = {
@@ -99,10 +100,8 @@ def task_detail(request, pk):
         'currency': task.currency,
         'task_creator': task.task_creator.username,
     }
+    if request.method == 'POST':
+        query = request.POST
+        return render(request, 'tasks/task_detail.html', {'query': query})
+
     return HttpResponse(json.dumps(data), content_type='application/json')
-
-
-@csrf_exempt
-def task_detail_html(request):
-    query = request.POST
-    return render(request, 'tasks/task_detail.html', {'query': query})
