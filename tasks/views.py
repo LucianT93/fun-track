@@ -56,13 +56,16 @@ def update_task(request, pk):
     task_to_update = Tasks.objects.get(id=pk)  # aici vine id-ul din frontend
     task_update_form = TaskCreationForm(instance=task_to_update)
     users = UserExtend.objects.all()
+    current_user = UserExtend.objects.get(user_ptr_id=request.user.id)
     if request.method == 'POST':
         print(request.POST)
 
         task_to_update.name = request.POST.get('name')
         task_to_update.description = request.POST.get('description')
         task_to_update.difficulty = request.POST.get('difficulty')
+        task_to_update.active = request.POST.get('active')
         task_to_update.assigned_to = int(request.POST.get('assign-to'))
+        task_to_update.task_textbox = request.POST.get('text_box')
 
         if task_to_update.difficulty == 'easy':
             task_to_update.experience = 50
@@ -79,4 +82,5 @@ def update_task(request, pk):
     return render(request, 'tasks/update_tasks.html', {
         'form': task_update_form,
         'users': users,
+        'current_user':current_user
     })
