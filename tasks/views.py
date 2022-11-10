@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView
@@ -6,7 +7,7 @@ from tasks.forms import TaskCreationForm
 from tasks.models import Tasks
 from userextend.models import UserExtend
 
-
+@login_required()
 def create_task(request):
     task_create_form = TaskCreationForm()
     users = UserExtend.objects.all()
@@ -50,7 +51,7 @@ def create_task(request):
 
 # Create update task functionality for both managers and users, facem un singur formular si controlam ce se afiseaza din form in front end cu if-uri
 
-
+@login_required
 def update_task(request, pk):
     task_to_update = Tasks.objects.get(id=pk)  # aici vine id-ul din frontend
     task_update_form = TaskCreationForm(instance=task_to_update)

@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -20,7 +21,7 @@ def user_login_registration(request):
             user = authenticate(request, username=username, password=password)
             if user:
                 login(request, user)
-                return redirect('home')
+                return redirect('account')
             else:
                 messages.error(request, 'Username or password is incorrect')
         else:
@@ -36,13 +37,13 @@ def user_logout(request):
     logout(request)
     return redirect('home')
 
-
+@login_required
 def get_account(request):
     account = UserExtend.objects.get(user_ptr_id=request.user.id)
     tasks = Tasks.objects.filter(assigned_to=account.id)
     return render(request, 'account/account.html', {'account': account, 'tasks': tasks})
 
-
+@login_required
 def update_account(request):
     user_to_update = UserExtend.objects.get(user_ptr_id=request.user.id)
     user_update_form = UserUpdateForm(instance=user_to_update)
