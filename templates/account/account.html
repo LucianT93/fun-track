@@ -1,21 +1,21 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-  <div style="display: flex; flex-flow: row; align-items: flex-start; justify-content: space-between;">
-    <div style="display: flex; flex-flow: column; justify-content: space-between; gap: 50px; width: 50%">
-      <div><img src="{{ account.image.url }}" height="40px" width="40px"></div>
-      <h2>{{ account.username }}</h2>
-      <h2>{{ account.email }}</h2>
-      <h2>{{ account }}</h2>
-      <h3><a href="{% url 'update_account' %}">Update</a></h3>
-    </div>
-    <div style="display: flex; flex-flow: column; justify-content: flex-start; gap: 10px; width: 50%">
-      {% for task in tasks %}
-        <div style="display: flex; justify-content: space-between; border: 2px solid black; padding: 5px">
-          <div><h2>{{ task }}</h2></div>
-          <div><h5>Created by {{ task.task_creator }}</h5></div>
+    <div style="display: flex; flex-flow: row; align-items: flex-start; justify-content: space-between;">
+        <div style="display: flex; flex-flow: column; justify-content: space-between; gap: 50px; width: 50%">
+            <div><img src="{{ account.image.url }}" height="40px" width="40px"></div>
+            <h2>{{ account.username }}</h2>
+            <h2>{{ account.email }}</h2>
+            <h2>{{ account }}</h2>
+            <h3><a href="{% url 'update_account' %}">Update</a></h3>
         </div>
-      {% endfor %}
+        <div style="display: flex; flex-flow: column; justify-content: flex-start; gap: 10px; width: 50%">
+            {% for task in tasks %}
+                <div style="display: flex; justify-content: space-between; border: 2px solid black; padding: 5px">
+                    <div><h2>{{ task }}</h2></div>
+                    <div><h5>Created by {{ task.task_creator }}</h5></div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
-  </div>
 {% endblock %}
