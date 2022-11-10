@@ -13,13 +13,14 @@
         <div><h2>{{ task }}</h2></div>
         <div><h5>Created by {{ task.task_creator }}</h5></div>
         <div>
-          <button class="btn" id="btn{{ task.id }}" value={{ task.id }}>See details</button>
+          <button class="btn" onclick='show_details({{ task.id }})' >See details</button>
         </div>
       </div>
     {% endfor %}
 
   </div>
   <div id="task_detail" style="display: flex; flex-flow: column; justify-content: space-between; gap: 50px; width: 50%">
+
   </div>
 </div>
 </body>

@@ -88,26 +88,21 @@ def tasks(request):
     return render(request, 'tasks/tasks.html', {'tasks': tasks_list})
 
 
-def task_detail(request):
-    _tasks = Tasks.objects.all()
-    tasks_data = []
-    for task in _tasks:
-        data = {
-            'id': task.id,
-            'name': task.name,
-            'description': task.description,
-            'difficulty': task.difficulty,
-            'experience': task.experience,
-            'currency': task.currency,
-            'task_creator': task.task_creator.username,
-        }
-        tasks_data.append(data)
-    # print(tasks_data)
-    return HttpResponse(json.dumps(tasks_data), content_type='application/json')
+def task_detail(request, pk):
+    task = Tasks.objects.get(id=pk)
+    data = {
+        'id': task.id,
+        'name': task.name,
+        'description': task.description,
+        'difficulty': task.difficulty,
+        'experience': task.experience,
+        'currency': task.currency,
+        'task_creator': task.task_creator.username,
+    }
+    return HttpResponse(json.dumps(data), content_type='application/json')
 
 
 @csrf_exempt
 def task_detail_html(request):
-    queries = request.POST
-    print(queries)
-    return render(request, 'tasks/task_detail.html', {'queries': queries})
+    query = request.POST
+    return render(request, 'tasks/task_detail.html', {'query': query})
