@@ -1,4 +1,5 @@
 from django.db import models
+from rest_framework import serializers
 
 from userextend.models import UserExtend
 
@@ -14,7 +15,6 @@ class Tasks(models.Model):
 
     task_creator = models.ForeignKey(UserExtend, on_delete=models.CASCADE)
     assigned_to = models.IntegerField()
-    task_textbox = models.TextField(max_length=500, blank=True, null=True)
 
     active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -22,3 +22,15 @@ class Tasks(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class TaskComment(models.Model):
+    creator = models.ForeignKey(UserExtend, on_delete=models.CASCADE)
+    task = models.ForeignKey(Tasks, on_delete=models.CASCADE)
+    body = models.TextField(max_length=1000, blank=True, null=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.creator} commented on {self.task.name}'
