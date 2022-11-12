@@ -108,8 +108,8 @@
           </div>
           {% for task in tasks %}
             <div class="msg selected-bg anim-y">
-              <input type="checkbox" name="msg" id="mail1" class="mail-choice" checked>
-              <label for="mail1"></label>
+              <input type="checkbox" name="msg" id="mail{{ task.id }}" class="mail-choice" checked>
+              <label for="mail{{ task.id }}"></label>
               <div class="msg-content">
                 <div class="msg-title">{{ task.name }}</div>
                 <div class="msg-date">{{ task.updated_at|timesince }}</div>
