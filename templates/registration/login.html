@@ -18,32 +18,28 @@
   <h3 id="register_error" hidden>Username already exists or password didn't meet the requirements</h3>
     <input type="checkbox" id="chk" aria-hidden="true">
     <div class="signup">
-        <form method="POST" id="register_form">
+        <form method="POST" id="register_form" action="{% url 'register' %}">
           {% csrf_token %}
             <label for="chk" aria-hidden="true">Sign up</label>
-{#            <input type="text" name="username" placeholder="User name" required="">#}
-{#            <input type="email" name="email" placeholder="E-mail" required="">#}
-{#            <input type="password" name="password" placeholder="Password" required="">#}
-{#            {{ form.first_name }}#}
-{#            {{ form.last_name }}#}
             {{ form.email }}
             {{ form.username }}
             {{ form.password1 }}
             {{ form.password2 }}
-            <button>Sign up</button>
+            <button type="submit">Sign up</button>
         </form>
     </div>
 
     <div class="login">
-        <form method="POST" id="login_form">
+        <form method="POST" id="login_form" action="{% url 'login' %}">
           {% csrf_token %}
             <label for="chk" aria-hidden="true">Login</label>
-            <input type="hidden" id="flag" name="flag" value="login">
-            <input type="text" id="user-login" name="user-login" placeholder="Username" required="">
-            <input type="password" id="password-login" name="password-login" placeholder="Password" required="">
+            <input type="text" id="user-login" name="username" placeholder="Username" required="">
+            <input type="password" id="password-login" name="password" placeholder="Password" required="">
             <button type="submit">Login</button>
         </form>
     </div>
 </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="{% static 'script/jquery.js' %}"></script>
 </html>

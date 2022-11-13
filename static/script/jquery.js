@@ -15,19 +15,19 @@ function changeColor() {
     document.getElementById('colorpicker').value = color;
 }
 
-$(document).ready(() => {
+$(document).ready(function () {
     $('#login_form').submit(function (e) {
         e.preventDefault()
         $.ajax({
             type: 'POST',
-            url: "login_register/",
+            url: "login/",
             data: {
-                flag: $("#flag").val(),
                 username: $('#user-login').val(),
                 password: $('#password-login').val(),
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
             },
             success: function (data) {
+                console.log(data)
                 if (data['message'] === 'success') {
                     location.reload()
                 } else {
@@ -36,4 +36,27 @@ $(document).ready(() => {
             }
         })
     })
+
+    $('#register_form').submit(function (e) {
+        e.preventDefault()
+        $.ajax({
+            type: 'POST',
+            url: "register/",
+            data: {
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                username: $('#username_register').val(),
+                email: $('#email_register').val(),
+                password1: $('#pass1_register').val(),
+                password2: $('#pass2_register').val(),
+            },
+            success: function (data) {
+                if (data['message'] === 'success') {
+                    location.reload()
+                } else {
+                    $('#register_error').show()
+                }
+            }
+        })
+    })
 })
+

@@ -19,25 +19,26 @@ def render_login_registration(request):
     return render(request, 'registration/login.html', {'form': register_user_form})
 
 
-def user_login_registration(request):
+def user_login(request):
     print(request.POST)
-    if request.method == 'POST':
-        if request.POST.get('flag') == 'login':
-            username = request.POST['user-login']
-            password = request.POST['password-login']
 
-            user = authenticate(request, username=username, password=password)
-            if user:
-                login(request, user)
-                return HttpResponse(json.dumps({'message': 'success'}), content_type='application/json')
-            else:
-                return HttpResponse(json.dumps({"message": "denied"}), content_type="application/json")
-        else:
-            registered_user_form = UserExtendCreationForm(request.POST)
-            if registered_user_form.is_valid():
-                registered_user_form.save()
-                return HttpResponse(json.dumps({'message': 'success'}), content_type='application/json')
-            return HttpResponse(json.dumps({"message": "denied"}), content_type="application/json")
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+
+    user = authenticate(request, username=username, password=password)
+    print(user)
+    if user:
+        login(request, user)
+        return HttpResponse(json.dumps({'message': 'success'}), content_type='application/json')
+    return HttpResponse(json.dumps({"message": "denied"}), content_type="application/json")
+
+
+def user_registration(request):
+    registered_user_form = UserExtendCreationForm(request.POST)
+    if registered_user_form.is_valid():
+        registered_user_form.save()
+        return HttpResponse(json.dumps({'message': 'success'}), content_type='application/json')
+    return HttpResponse(json.dumps({"message": "denied"}), content_type="application/json")
 
 
 def user_logout(request):
