@@ -1,11 +1,17 @@
 from django.contrib.auth.decorators import login_required
+import json
+
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.utils.timesince import timesince
 from django.views.generic import UpdateView
 
-from tasks.forms import TaskCreationForm
+from tasks.forms import TaskCreationForm, TaskCommentForm
 from tasks.models import Tasks
 from userextend.models import UserExtend
+from django.views.decorators.csrf import csrf_exempt
+
 
 @login_required()
 def create_task(request):
@@ -40,8 +46,6 @@ def create_task(request):
         )
         task_create.save()
         return redirect('home')
-
-
 
     return render(request, 'tasks/create_task.html', {
         'form': task_create_form,
@@ -82,5 +86,42 @@ def update_task(request, pk):
     return render(request, 'tasks/update_tasks.html', {
         'form': task_update_form,
         'users': users,
-        'current_user':current_user
+        'current_user': current_user
     })
+
+
+def tasks(request):
+    tasks_list = Tasks.objects.all()
+    return render(request, 'tasks/tasks.html', {'tasks': tasks_list})
+
+
+@csrf_exempt
+def task_detail(request, pk):
+    task = Tasks.objects.get(id=pk)
+    data = {'id': task.id}
+    if request.method == 'POST':
+        comment_form = TaskCommentForm()
+        query = request.POST
+        task = Tasks.objects.get(id=query['id'])
+        comments = {comment.creator: comment.body for comment in task.taskcomment_set.all()}
+        context_data = {
+            'task_id': task.id,
+            'task_name': task.name,
+            'task_description': task.description,
+            'task_updated': task.updated_at.date(),
+            'task_creator': task.task_creator,
+            'comment_form': comment_form,
+            'comments': comments
+        }
+        return render(request, 'tasks/task_detail.html', context_data)
+
+    return HttpResponse(json.dumps(data), content_type='application/json')
+
+
+def task_comment(request):
+    comment_form = TaskCommentForm(request.POST)
+    if request.method == 'POST':
+        if comment_form.is_valid():
+            comment_form.save()
+
+    return redirect('tasks')
