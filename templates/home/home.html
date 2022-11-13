@@ -63,15 +63,15 @@
     <div class="sticky-wrapper">
         <div class="pos-relative login-relative">
             <img class="arrow" src="{% static 'media/pixel-arrow-final.png' %}" alt="">
-            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'get_login_register' %}">Login</a>
         </div>
         <div class="pos-relative login-relative">
             <img class="arrow" src="{% static 'media/pixel-arrow-final.png' %}" alt="">
-            <a href="{% url 'login' %}">Register</a>
+            <a href="{% url 'get_login_register' %}">Register</a>
         </div>
     </div>
 </section>
 </body>
-<script src="{% static 'script/javascript.js' %}"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="{% static 'script/jquery.js' %}"></script>
 </html>

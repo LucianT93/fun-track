@@ -10,14 +10,16 @@ class UserExtendCreationForm(UserCreationForm):
     class Meta:
         model = UserExtend
 
-        fields = ['image', 'username', 'email', 'password1', 'password2']
+        fields = ['username', 'email', 'password1', 'password2']
 
         widgets = {
             'email': EmailInput(attrs={
-                'placeholder': 'Please enter your email'
+                'placeholder': 'Please enter your email',
+                'id': 'email_register'
             }),
             'username': TextInput(attrs={
-                'placeholder': 'Please enter your username'
+                'placeholder': 'Please enter your username',
+                'id': 'username_register'
             }),
         }
 

@@ -1,6 +1,9 @@
+import json
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -11,37 +14,44 @@ from userextend.forms import UserExtendCreationForm, UserUpdateForm
 from userextend.models import UserExtend
 
 
-def user_login_registration(request):
+def render_login_registration(request):
     register_user_form = UserExtendCreationForm()
-    if request.method == 'POST':
-        if request.POST.get('flag') == 'login':
-            username = request.POST['user-login']
-            password = request.POST['password-login']
-
-            user = authenticate(request, username=username, password=password)
-            if user:
-                login(request, user)
-                return redirect('account')
-            else:
-                messages.error(request, 'Username or password is incorrect')
-        else:
-            registered_user_form = UserExtendCreationForm(request.POST)
-            if registered_user_form.is_valid():
-                registered_user_form.save()
-                return redirect('home')
-
     return render(request, 'registration/login.html', {'form': register_user_form})
+
+
+def user_login(request):
+    print(request.POST)
+
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+
+    user = authenticate(request, username=username, password=password)
+    print(user)
+    if user:
+        login(request, user)
+        return HttpResponse(json.dumps({'message': 'success'}), content_type='application/json')
+    return HttpResponse(json.dumps({"message": "denied"}), content_type="application/json")
+
+
+def user_registration(request):
+    registered_user_form = UserExtendCreationForm(request.POST)
+    if registered_user_form.is_valid():
+        registered_user_form.save()
+        return HttpResponse(json.dumps({'message': 'success'}), content_type='application/json')
+    return HttpResponse(json.dumps({"message": "denied"}), content_type="application/json")
 
 
 def user_logout(request):
     logout(request)
     return redirect('home')
 
+
 @login_required
 def get_account(request):
     account = UserExtend.objects.get(user_ptr_id=request.user.id)
     tasks = Tasks.objects.filter(assigned_to=account.id)
     return render(request, 'account/account.html', {'account': account, 'tasks': tasks})
+
 
 @login_required
 def update_account(request):
