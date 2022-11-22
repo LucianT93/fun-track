@@ -173,5 +173,4 @@ function changeColor() {
 }
 
 
-// Color saving in browser's memory
-
+// Dropdown menu

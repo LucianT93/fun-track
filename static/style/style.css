@@ -33,12 +33,12 @@ h1 + p {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    align-items: start;
+    flex-flow: column;
 }
 
 .sticky-user {
-    position: -webkit-sticky;
-    position: sticky;
+    position: absolute;
     right: 50px;
     bottom: 50px;
     max-width: 350px;
@@ -192,7 +192,7 @@ h1 + p {
 }
 
 .card-container p {
-    color: hsla(0, 0%, 100%, .6);
+    color: #ffffff;
     font-size: 2.2rem;
     margin-bottom: auto;
 }
