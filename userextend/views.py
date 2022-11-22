@@ -16,7 +16,10 @@ from userextend.models import UserExtend
 
 def render_login_registration(request):
     register_user_form = UserExtendCreationForm()
-    return render(request, 'registration/login.html', {'form': register_user_form})
+    if not request.user.is_authenticated:
+        return render(request, 'registration/login.html', {'form': register_user_form})
+    else:
+        return redirect('tasks')
 
 
 def user_login(request):

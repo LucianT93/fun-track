@@ -8,14 +8,10 @@
 
 </head>
 <body>
-{#      {% if messages %}#}
-{#          {% for message in messages %}#}
-{#            <div>{{ message }}</div>#}
-{#          {% endfor %}#}
-{#      {% endif %}#}
 <div class="main">
   <h3 id="login_error" hidden>Username or password incorrect!</h3>
   <h3 id="register_error" hidden>Username already exists or password didn't meet the requirements</h3>
+  <h3 id="register_success" style="color: greenyellow" hidden>Register Successful! You can now login!</h3>
     <input type="checkbox" id="chk" aria-hidden="true">
     <div class="signup">
         <form method="POST" id="register_form" action="{% url 'register' %}">

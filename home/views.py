@@ -1,8 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 
 
 # Create your views here.
 
-class HomeView(TemplateView):
-    template_name = 'home/home.html'
+def home_view(request):
+    if not request.user.is_authenticated:
+        return render(request, 'home/home.html')
+    else:
+        return redirect('tasks')

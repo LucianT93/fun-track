@@ -29,7 +29,7 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data)
                 if (data['message'] === 'success') {
-                    location.reload()
+                    window.location.replace('/tasks/')
                 } else {
                     $('#login_error').show()
                 }
@@ -51,7 +51,7 @@ $(document).ready(function () {
             },
             success: function (data) {
                 if (data['message'] === 'success') {
-                    location.reload()
+                    $('#register_success').show()
                 } else {
                     $('#register_error').show()
                 }
