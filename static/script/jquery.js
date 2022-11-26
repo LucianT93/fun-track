@@ -32,6 +32,12 @@ $(document).ready(function () {
                     window.location.replace('/tasks/')
                 } else {
                     $('#login_error').show()
+                    let register_error = $('#register_error')
+                    let register_success = $('#register_success')
+                    while (register_error.css('display') === 'block' || register_success.css('display') === 'block') {
+                        register_error.hide()
+                        register_success.hide()
+                    }
                 }
             }
         })
@@ -52,8 +58,21 @@ $(document).ready(function () {
             success: function (data) {
                 if (data['message'] === 'success') {
                     $('#register_success').show()
+                    let register_error = $('#register_error')
+                    let login_error = $('#login_error')
+                    while (register_error.css('display') === 'block' || login_error.css('display') === 'block') {
+                        register_error.hide()
+                        login_error.hide()
+                    }
                 } else {
                     $('#register_error').show()
+                    let register_success = $('#register_success')
+                    let login_error = $('#login_error')
+                    while (register_success.css('display') === 'block' || login_error.css('display') === 'block') {
+                        register_success.hide()
+                        login_error.hide()
+                    }
+
                 }
             }
         })

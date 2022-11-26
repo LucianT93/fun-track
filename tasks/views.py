@@ -13,7 +13,7 @@ from userextend.models import UserExtend
 from django.views.decorators.csrf import csrf_exempt
 
 
-@login_required()
+@login_required
 def create_task(request):
     task_create_form = TaskCreationForm()
     users = UserExtend.objects.all()
@@ -90,9 +90,11 @@ def update_task(request, pk):
     })
 
 
+@login_required
 def tasks(request):
     tasks_list = Tasks.objects.all()
-    return render(request, 'tasks/tasks.html', {'tasks': tasks_list})
+    current_user = UserExtend.objects.get(user_ptr_id=request.user.id)
+    return render(request, 'tasks/tasks.html', {'tasks': tasks_list, "current_user": current_user})
 
 
 @csrf_exempt
