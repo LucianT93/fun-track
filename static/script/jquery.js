@@ -72,6 +72,7 @@ $(document).ready(function () {
                         register_success.hide()
                         login_error.hide()
                     }
+
                 }
             }
         })
