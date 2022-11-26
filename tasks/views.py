@@ -82,6 +82,7 @@ def update_task(request, pk):
             task_to_update.currency = 150
 
         task_to_update.save()
+        return redirect('tasks')
 
     return render(request, 'tasks/update_tasks.html', {
         'form': task_update_form,

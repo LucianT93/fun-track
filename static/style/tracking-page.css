@@ -166,6 +166,11 @@ z-index: 1;
     background-color: #113d3c;
 }
 
+.hover-effect:hover {
+    background-color: #113d3c;
+    cursor: pointer;
+}
+
 .dropdown-content a {
     padding: 12px 16px;
     display: block;
