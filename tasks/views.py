@@ -111,7 +111,8 @@ def task_detail(request, pk):
             'task_updated': task.updated_at.date(),
             'task_creator': task.task_creator,
             'comment_form': comment_form,
-            'comments': comments
+            'comments': comments,
+            'task_assignee': task.assigned_to,
         }
         return render(request, 'tasks/task_detail.html', context_data)
 
